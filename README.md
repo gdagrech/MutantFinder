@@ -18,6 +18,10 @@ Any violation of this parameters will trigger the proper validation and you will
 
 The application is hosted on the azure cloud (http://mutantfinder.azurewebsites.net/swagger/index.html) for testing purposes.
 
+Another example of use could be to just make a post from a command line like this:
+
+curl -X POST "http://mutantfinder.azurewebsites.net/api/mutant" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}"
+
 Any questions or concerns please refer to the architect.
 
 Long live MAGNETO!!!
