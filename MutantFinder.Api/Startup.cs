@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MutantFinder.Api.Models;
+using MutantFinder.DataLayer.Abstract;
+using MutantFinder.DataLayer.Concrete;
+using MutantFinder.Domain.Entities;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MutantFinder.Api
 {
     public class Startup
     {
+        public static IConfiguration Configuration { get; private set; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -33,20 +39,17 @@ namespace MutantFinder.Api
                         Name = "Gabriel D. Agrech",
                         Email = "gagrech@gmail.com.ar"
                     },
-                    License = new License
-                    {
-                        Name = "Acuerdo de Confidencialidad"
-                    }
                 });
-
-                //var filePath = Path.Combine(AppContext.BaseDirectory, @"../../MutantFinder.Api.xml");
-                //c.IncludeXmlComments(filePath);
 
             });
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddMvcOptions(o => o.OutputFormatters.Add(
                     new XmlDataContractSerializerOutputFormatter()));
+
+            var conn = Startup.Configuration["connectionsStrings:dnaSequencesDBConnectionString"];
+            services.AddDbContext<MutantFinderContext>(o => o.UseSqlServer(conn));
+            services.AddScoped<IDnaSequenceRepository, DnaSequenceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +64,14 @@ namespace MutantFinder.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MutantFinder V1");
             });
+
             app.UseStatusCodePages();
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<DnaSequence, DnaSequenceDto>();
+                cfg.CreateMap<DnaSequenceDto, DnaSequence>().ForMember(x => x.IsMutant, opt => opt.Ignore());
+                cfg.CreateMap<DnaSequenceForCreationDto, DnaSequence>();
+            });
             app.UseMvc();
         }
     }

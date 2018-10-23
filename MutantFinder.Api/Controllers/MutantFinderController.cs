@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MutantFinder.Api.Models;
+using MutantFinder.DataLayer.Abstract;
+using MutantFinder.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +14,44 @@ namespace MutantFinder.Api.Controllers
     [Route("api/mutant")]
     public class MutantFinderController : Controller
     {
+
+        private IDnaSequenceRepository _dnaSequenceRepository;
+
+        public MutantFinderController(IDnaSequenceRepository dnaSequenceRepository)
+        {
+            _dnaSequenceRepository = dnaSequenceRepository;
+        }
+
         [HttpPost]
         public IActionResult IsMutant([FromBody] DnaSequenceDto dna)
         {
-            if (!ValidateDnaSequenceEntry(dna))
-            {                
+            var isValidDnaSequenceEntry = ValidateDnaSequenceEntry(dna);
+
+            if (!isValidDnaSequenceEntry)
+            {
                 return BadRequest(ModelState);
 
             }
-            if (!CheckForMutantSequence(dna.Dna))
+            var isMutant = CheckForMutantSequence(dna.Dna);
+                        
+            CreateDnaSequence(dna, isMutant);
+
+            if (!isMutant)
             {
                 ModelState.AddModelError("Filthy Human", "New target for termination");
                 return StatusCode(403, ModelState);
             }
 
             return Ok("Mutant soldier ready to fight for our leader Magneto!!!");             
+        }
+
+        private void CreateDnaSequence(DnaSequenceDto model, bool isMutant)
+        {
+            var entity = Mapper.Map<DnaSequence>(model);
+            entity.IsMutant = isMutant;
+            entity.DnaText = string.Join(", ", model.Dna);
+            _dnaSequenceRepository.CreateDnaSequence(entity);
+            _dnaSequenceRepository.Save();
         }
 
         private bool CheckForMutantSequence(string[] dna)

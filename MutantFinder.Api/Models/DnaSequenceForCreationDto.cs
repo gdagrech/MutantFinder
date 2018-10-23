@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace MutantFinder.Api.Models
 {
-    public class DnaSequenceDto
+    public class DnaSequenceForCreationDto
     {
-        public string[] Dna { get; set; } 
+        public string[] Dna { get; set; }
+        public bool IsMutant { get; set; }
     }
 }
