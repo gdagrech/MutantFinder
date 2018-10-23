@@ -9,6 +9,8 @@ using MutantFinder.Api.Models;
 using MutantFinder.DataLayer.Abstract;
 using MutantFinder.DataLayer.Concrete;
 using MutantFinder.Domain.Entities;
+using MutantFinder.Services.Abstract;
+using MutantFinder.Services.DataServices;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MutantFinder.Api
@@ -50,6 +52,7 @@ namespace MutantFinder.Api
             var conn = Startup.Configuration["connectionsStrings:dnaSequencesDBConnectionString"];
             services.AddDbContext<MutantFinderContext>(o => o.UseSqlServer(conn));
             services.AddScoped<IDnaSequenceRepository, DnaSequenceRepository>();
+            services.AddScoped<IDnaSequenceService, DnaSequenceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

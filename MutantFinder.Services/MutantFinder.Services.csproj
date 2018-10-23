@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MutantFinder.DataLayer\MutantFinder.DataLayer.csproj" />
+    <ProjectReference Include="..\MutantFinder.Domain\MutantFinder.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MutantFinder.DataLayer\MutantFinder.DataLayer.csproj" />
+    <ProjectReference Include="..\MutantFinder.Services\MutantFinder.Services.csproj" />
   </ItemGroup>
 
 </Project>

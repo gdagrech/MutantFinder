@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MutantFinder.Api.Models;
 using MutantFinder.DataLayer.Abstract;
 using MutantFinder.Domain.Entities;
+using MutantFinder.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,11 @@ namespace MutantFinder.Api.Controllers
     [Route("api/mutant")]
     public class MutantFinderController : Controller
     {
+        private readonly IDnaSequenceService _dnaSequenceService;
 
-        private IDnaSequenceRepository _dnaSequenceRepository;
-
-        public MutantFinderController(IDnaSequenceRepository dnaSequenceRepository)
-        {
-            _dnaSequenceRepository = dnaSequenceRepository;
+        public MutantFinderController(IDnaSequenceService dnaSequenceService)
+        {           
+            _dnaSequenceService = dnaSequenceService;
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace MutantFinder.Api.Controllers
         [HttpGet("/stats")]
         public IActionResult GetStats()
         {
-            var entities = _dnaSequenceRepository.GetDnaSequences();
+            var entities = _dnaSequenceService.GetDnaSequences();
             var mutants = from e in entities where e.IsMutant == true select e;
             var mutantCount = mutants.Count();
             var humanCount = entities.Count() - mutantCount;
@@ -68,8 +68,8 @@ namespace MutantFinder.Api.Controllers
             var entity = Mapper.Map<DnaSequence>(model);
             entity.IsMutant = isMutant;
             entity.DnaText = string.Join(", ", model.Dna);
-            _dnaSequenceRepository.CreateDnaSequence(entity);
-            _dnaSequenceRepository.Save();
+            _dnaSequenceService.CreateDnaSequence(entity);
+            _dnaSequenceService.Save();
         }
 
         private bool CheckForMutantSequence(string[] dna)
