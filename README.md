@@ -14,6 +14,8 @@ In this first example the dna sequence will be analyzed as a "HUMAN" dna because
 
 Please take into account that only the letters A-T-C-G are valid and although sequences can be of any size all the sequences in the array must have the same length.
 
+Sequences in dna structucture must also form a square matrix, ie: a 2 by 2 matrix would be {"dna":["AT","GT"]}, a 3 by 3 would be {"dna":["ATG","CGT", "TTC"]} and so on.
+
 Any violation of this parameters will trigger the proper validation and you will be presented with an error message specifying what went wrong. You can then correct the sequence to be analyzed again.
 
 The application is hosted on the azure cloud (http://mutantfinder.azurewebsites.net/swagger/index.html) for testing purposes.
