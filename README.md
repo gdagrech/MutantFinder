@@ -16,7 +16,7 @@ Please take into account that only the letters A-T-C-G are valid and although se
 
 Any violation of this parameters will trigger the proper validation and you will be presented with an error message specifying what went wrong. You can then correct the sequence to be analyzed again.
 
-The application will be hosted on the azure cloud (soon there will be a link here) for testing purposes.
+The application is hosted on the azure cloud (http://mutantfinder.azurewebsites.net/swagger/index.html) for testing purposes.
 
 Any questions or concerns please refer to the architect.
 
