@@ -10,7 +10,7 @@ To analize a dna sequence you only need to add the sequence with the following f
     "dna":["ATGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]
 }
 
-In this first example the dna sequence will be analized as a "HUMAN" dna due to no mutant patterns are present in the sequence.
+In this first example the dna sequence will be analized as a "HUMAN" dna because no mutant patterns are present in the sequence.
 There must be more than one mutant pattern for the dna to be analized as "MUTANT"
 On the other hand, the next example will be analized as a "MUTANT" dna.
 
