@@ -59,7 +59,7 @@ namespace MutantFinder.Api.Controllers
                 CountMutantDna = mutantCount,
                 Ratio = (float)Math.Min(humanCount, mutantCount) / Math.Max(humanCount, mutantCount)
             };
-
+            
             return Ok(statsDto);
         }
 
