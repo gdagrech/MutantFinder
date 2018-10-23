@@ -74,7 +74,7 @@ namespace MutantFinder.Api.Controllers
 
         private bool CheckForMutantSequence(string[] dna)
         {            
-            char[][] jaggedArr = new char[3][];
+            char[][] jaggedArr = new char[dna.Count()][];
             int l = 0;
 
             foreach (var item in dna)
