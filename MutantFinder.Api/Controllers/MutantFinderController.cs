@@ -74,7 +74,7 @@ namespace MutantFinder.Api.Controllers
 
         private bool CheckForMutantSequence(string[] dna)
         {            
-            char[][] jaggedArr = new char[dna.Count()][];
+            char[][] jaggedArr = new char[3][];
             int l = 0;
 
             foreach (var item in dna)
@@ -142,6 +142,12 @@ namespace MutantFinder.Api.Controllers
         {
             var isValidSequence = true;
             var firstItemLenght = dna.Dna.First().Length;
+
+            if(firstItemLenght != dna.Dna.Count())
+            {
+                ModelState.AddModelError("Wrong Sequence", "Sequences in dna structure can be of any size but it must form a square matrix, ie: a 2 by 2 matrix would be ['AA', 'TT']");
+                return isValidSequence = false;
+            }
             string allowedLetters = "aAtTcCgG";
             foreach (var item in dna.Dna)
             {
