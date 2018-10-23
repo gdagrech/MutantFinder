@@ -45,6 +45,24 @@ namespace MutantFinder.Api.Controllers
             return Ok("Mutant soldier ready to fight for our leader Magneto!!!");             
         }
 
+        [HttpGet("/stats")]
+        public IActionResult GetStats()
+        {
+            var entities = _dnaSequenceRepository.GetDnaSequences();
+            var mutants = from e in entities where e.IsMutant == true select e;
+            var mutantCount = mutants.Count();
+            var humanCount = entities.Count() - mutantCount;
+
+            var statsDto = new StatsDto
+            {
+                CountHumanDna = humanCount,
+                CountMutantDna = mutantCount,
+                Ratio = (float)Math.Min(humanCount, mutantCount) / Math.Max(humanCount, mutantCount)
+            };
+
+            return Ok(statsDto);
+        }
+
         private void CreateDnaSequence(DnaSequenceDto model, bool isMutant)
         {
             var entity = Mapper.Map<DnaSequence>(model);
