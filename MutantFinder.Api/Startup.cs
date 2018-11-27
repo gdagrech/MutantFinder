@@ -39,7 +39,7 @@ namespace MutantFinder.Api
                     Contact = new Contact
                     {
                         Name = "Gabriel D. Agrech",
-                        Email = "gagrech@gmail.com.ar"
+                        Email = "gdagrech@gmail.com.ar"
                     },
                 });
 

@@ -130,7 +130,7 @@ namespace MutantFinder.Api.Controllers
             int mutantSegFound = 0;
             foreach (var item in outputArr)
             {                
-                if (item.Contains("AAAA") || item.Contains("CCCC") || item.Contains("TTTT") || item.Contains("GGGG"))
+                if (item.ToLower().Contains("aaaa") || item.ToLower().Contains("cccc") || item.ToLower().Contains("tttt") || item.ToLower().Contains("gggg"))
                 {
                     mutantSegFound++;
                 }                
