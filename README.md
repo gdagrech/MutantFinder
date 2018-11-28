@@ -18,6 +18,7 @@ Sequences in dna structucture must also form a square matrix, ie: a 2 by 2 matri
 
 Any violation of this parameters will trigger the proper validation and you will be presented with an error message specifying what went wrong. You can then correct the sequence to be analyzed again.
 
+// THE WEBSITE IS TEMPORARY DOWN!!! 
 The application is hosted on the azure cloud (http://mutantfinder.azurewebsites.net/swagger/index.html) for testing purposes.
 
 Another example of use could be to just make a post from a command line like this:
